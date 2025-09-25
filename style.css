@@ -1,0 +1,394 @@
+/* assets/styles/styles.css */
+
+/* CSS Reset + base scale */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0f172a;            /* slate-900 */
+  --bg-soft: #111827;       /* gray-900 */
+  --card: #1f2937;          /* gray-800 */
+  --text: #e5e7eb;          /* gray-200 */
+  --muted: #9ca3af;         /* gray-400 */
+  --primary: #60a5fa;       /* blue-400 */
+  --accent: #34d399;        /* emerald-400 */
+  --danger: #f87171;        /* red-400 */
+  --shadow: 0 10px 20px rgba(0,0,0,0.3);
+  --radius: 14px;
+  --radius-sm: 10px;
+  --gap: 1.2rem;
+  --gap-lg: 2rem;
+  --container: min(1100px, 90vw);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, var(--bg-soft), var(--bg));
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.6;
+}
+
+/* Utilities */
+.container {
+  width: var(--container);
+  margin-inline: auto;
+}
+
+.section {
+  padding: 3rem 0;
+}
+
+.section-title {
+  margin: 0 0 0.3rem 0;
+  font-size: clamp(1.6rem, 2vw, 2rem);
+  letter-spacing: 0.4px;
+}
+
+.section-subtitle {
+  margin: 0 0 1.5rem 0;
+  color: var(--muted);
+}
+
+/* Buttons */
+.btn {
+  appearance: none;
+  border: none;
+  background: var(--primary);
+  color: #071a2f;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  cursor: pointer;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--primary);
+}
+.btn-outline:hover {
+  background: rgba(96, 165, 250, 0.12);
+}
+
+/* --- Task 0: Flexbox Navigation Bar --- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(17, 24, 39, 0.8);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nav-container {
+  display: flex;
+  align-items: center;        /* vertical center */
+  justify-content: space-between;
+  padding: 0.8rem 0;
+}
+
+.logo {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: 0.3px;
+}
+
+.main-nav .nav-list {
+  list-style: none;
+  display: flex;              /* flex container for links */
+  gap: 1.2rem;                /* spacing between links */
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: var(--text);
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+.nav-list a:hover {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* --- Task 1: Flexbox Card Row --- */
+.cards {
+  display: flex;
+  gap: var(--gap);
+  align-items: stretch; /* ensures equal height cards */
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1 1 300px;           /* grow/shrink with min width */
+  background: linear-gradient(180deg, #1f2937, #111827 60%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  overflow: hidden;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  display: flex;             /* Flex inside the card */
+  flex-direction: column;    /* stack media and content */
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.35);
+  border-color: rgba(96,165,250,0.35);
+}
+
+.card-media img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem;
+  flex: 1;                   /* fill remaining space for equal heights */
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+.card-text {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* --- Task 2: Grid Layout with Areas --- */
+.grid-page {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius);
+  padding: var(--gap);
+}
+
+.grid-header {
+  grid-area: header;
+  padding: 0.8rem;
+  background: rgba(96,165,250,0.12);
+  border-radius: var(--radius-sm);
+}
+
+.grid-sidebar {
+  grid-area: sidebar;
+  padding: 0.8rem;
+  background: rgba(52, 211, 153, 0.12);
+  border-radius: var(--radius-sm);
+}
+.side-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.side-list li + li { margin-top: 0.4rem; }
+.side-list a { color: var(--text); text-decoration: none; }
+
+.grid-main {
+  grid-area: main;
+  padding: 0.8rem;
+  background: rgba(255,255,255,0.05);
+  border-radius: var(--radius-sm);
+}
+
+.grid-footer {
+  grid-area: footer;
+  padding: 0.8rem;
+  background: rgba(248, 113, 113, 0.12);
+  border-radius: var(--radius-sm);
+}
+
+/* --- Task 3: Image Gallery Grid + Hover Caption --- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* equal-width columns */
+  gap: var(--gap);                       /* consistent spacing */
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,0.08);
+  background: #0b1223;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.gallery-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px rgba(0,0,0,0.3);
+}
+
+.gallery-item img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+/* Caption overlay */
+.caption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 0.6rem 0.8rem;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.75) 100%);
+  color: #fff;
+  transform: translateY(100%);
+  transition: transform 180ms ease;
+}
+.gallery-item:hover .caption {
+  transform: translateY(0);
+}
+
+/* --- Task 4: Portfolio using Grid + Flex --- */
+.portfolio-layout {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius);
+  padding: var(--gap);
+}
+
+.portfolio-grid {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: 2fr 1fr; /* projects left, sidebar right */
+}
+
+.area-title {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+}
+
+.project-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+
+.project-card {
+  display: flex;              /* Flex inside card to arrange content */
+  flex-direction: column;
+  background: linear-gradient(180deg, #1f2937, #111827 60%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+  border-color: rgba(96,165,250,0.35);
+}
+
+.project-media img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.project-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.9rem;
+  flex: 1;                   /* Fill for equal heights in grid */
+}
+
+.project-title {
+  margin: 0;
+}
+.project-desc {
+  margin: 0;
+  color: var(--muted);
+}
+
+.portfolio-sidebar {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+.info-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.info-list li + li { margin-top: 0.5rem; }
+
+/* Footer */
+.site-footer {
+  margin-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  background: rgba(17, 24, 39, 0.6);
+}
+.footer-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+.footer-container a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+/* --- Responsive Breakpoints --- */
+@media (max-width: 1024px) {
+  .project-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .main-nav .nav-list {
+    gap: 0.6rem;
+  }
+  .grid-page {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "main"
+      "sidebar"
+      "footer";
+  }
+  .portfolio-grid {
+    grid-template-columns: 1fr; /* stack projects then sidebar */
+  }
+  .project-list {
+    grid-template-columns: 1fr;
+  }
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+}
